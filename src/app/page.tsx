@@ -1,5 +1,7 @@
 
 
+// ──────────────────────────────────────────────────────────────────────────────
+'use client';
 // ─── Feature Icon Items ───────────────────────────────────────────────────────
 function FeatureIconItem({ color, icon }: { color: string; icon: string }) {
   const colors: Record<string, { bg: string; border: string; dot: string }> = {
@@ -46,8 +48,7 @@ function FeatureIconItem({ color, icon }: { color: string; icon: string }) {
   );
 }
 
-'use client';
-import { useState, useEffect, useRef } from 'react';
+
 import Link from "next/link";
 
 function useReveal(threshold = 0.12) {
