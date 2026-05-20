@@ -1,8 +1,0 @@
-{
-  "routes": [
-    { "src": "/registered", "dest": "/registered" },
-    { "src": "/signin", "dest": "/signin" },
-    { "src": "/dashboard", "dest": "/dashboard" },
-    { "src": "/stock/:ticker", "dest": "/stock/:ticker" }
-  ]
-}
