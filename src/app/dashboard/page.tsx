@@ -162,7 +162,8 @@ function SettingsTab({ userSettings, setUserSettings }: {
             </div>
             <div>
               <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: '#475569', marginBottom: 6 }}>Date of birth</label>
-              <input type="date" value={userSettings.dob} onChange={e => setUserSettings({ ...userSettings, dob: e.target.value })} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #E5E7EB', fontSize: 14, outline: 'none', backgroundColor: '#FFFFFF', color: '#1A1A1A',            </div>
+              <input type="date" value={userSettings.dob} onChange={e => setUserSettings({ ...userSettings, dob: e.target.value })} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #E5E7EB', fontSize: 14, outline: 'none', backgroundColor: '#FFFFFF', color: '#1A1A1A', boxSizing: 'border-box' }} />
+            </div>
           </div>
         </div>
         <div style={{ padding: 24, borderRadius: 12, border: '1px solid #E5E7EB', backgroundColor: '#FAFAFA' }}>
