@@ -204,7 +204,7 @@ function SettingsTab({ userSettings, setUserSettings }: {
 }
 
 export default function DashboardPage() {
-  const [tab, setTab] = useState<'watchlist' | 'manage' | 'settings'>('watchlist');
+  const [tab, setTab] = useState<'watchlist' | 'manage' | 'source' | 'settings'>('watchlist');
   const [watchlist, setWatchlist] = useState(INITIAL_WATCHLIST);
   const [userSettings, setUserSettings] = useState({ name: 'Alex Morgan', dob: '1990-03-15', email: 'alex@alphafund.com', dataSources: 'sec', alertFrequency: 'daily' });
   const router = useRouter();
@@ -214,6 +214,7 @@ export default function DashboardPage() {
   const tabs = [
     { key: 'watchlist', label: 'Watchlist' },
     { key: 'manage', label: 'Manage' },
+    { key: 'source', label: 'Source' },
     { key: 'settings', label: 'Settings' },
   ] as const;
 
@@ -243,6 +244,21 @@ export default function DashboardPage() {
       <div style={{ maxWidth: 960, margin: '0 auto', padding: '32px 24px' }}>
         {tab === 'watchlist' && <WatchlistTab watchlist={watchlist} onTickerClick={handleTickerClick} />}
         {tab === 'manage' && <ManageTab watchlist={watchlist} setWatchlist={setWatchlist} />}
+        {tab === 'source' && (
+          <div style={{ backgroundColor: '#FFFFFF', borderRadius: 12, border: '1px solid #E5E7EB', padding: 32 }}>
+            <p style={{ fontSize: 20, fontWeight: 700, color: '#1A1A1A', marginBottom: 4 }}>Data Sources</p>
+            <p style={{ fontSize: 13, color: '#94A3B8', marginBottom: 24 }}>Connect additional filing sources and feeds</p>
+            <a
+              href="https://www.microsoft.com/en-us/investor/sec-filings"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 20px', backgroundColor: '#1A3C2A', color: '#FFFFFF', borderRadius: 8, fontSize: 14, fontWeight: 500, textDecoration: 'none', cursor: 'pointer' }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              View SEC Filings
+            </a>
+          </div>
+        )}
         {tab === 'settings' && <SettingsTab userSettings={userSettings} setUserSettings={setUserSettings} />}
       </div>
     </main>
