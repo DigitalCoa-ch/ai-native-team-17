@@ -224,7 +224,7 @@ function Nav() {
           <a href='#who-its-for' style={{ color: '#64748B' }}>Who it is for</a>
         </div>
         <div style={{ display: 'flex', gap: 12 }}>
-          <a href='#' style={{ fontSize: 14, fontWeight: 500, padding: '8px 16px', borderRadius: 8, color: '#1A3C2A' }}>Sign in</a>
+          <a href='/signin' style={{ fontSize: 14, fontWeight: 500, padding: '8px 16px', borderRadius: 8, color: '#1A3C2A' }}>Sign in</a>
           <a href='#cta' style={{ fontSize: 14, fontWeight: 500, padding: '8px 16px', borderRadius: 8, backgroundColor: '#1A3C2A', color: '#FFFFFF' }}>Request access</a>
         </div>
       </div>
@@ -617,7 +617,7 @@ function Pricing() {
                   <span style={{ fontSize: 14, color: '#94A3B8' }}>{tier.period}</span>
                 </div>
                 <p style={{ fontSize: 14, lineHeight: 1.65, color: '#64748B', marginBottom: 16 }}>{tier.desc}</p>
-                <a href="#cta" style={{ display: 'inline-block', padding: '10px 20px', borderRadius: 8, backgroundColor: tier.highlight ? '#1A3C2A' : '#FFFFFF', color: tier.highlight ? '#FFFFFF' : '#1A3C2A', fontSize: 14, fontWeight: 600, border: '1px solid #1A3C2A', textAlign: 'center' }}>Get started</a>
+                <a href="/registered" style={{ display: 'inline-block', padding: '10px 20px', borderRadius: 8, backgroundColor: tier.highlight ? '#1A3C2A' : '#FFFFFF', color: tier.highlight ? '#FFFFFF' : '#1A3C2A', fontSize: 14, fontWeight: 600, border: '1px solid #1A3C2A', textAlign: 'center' }}>Get started</a>
               </div>
             </Reveal>
           ))}
