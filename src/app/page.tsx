@@ -48,6 +48,7 @@ function FeatureIconItem({ color, icon }: { color: string; icon: string }) {
 
 'use client';
 import { useState, useEffect, useRef } from 'react';
+import Link from "next/link";
 
 function useReveal(threshold = 0.12) {
   const ref = useRef<HTMLDivElement>(null);
@@ -224,8 +225,8 @@ function Nav() {
           <a href='#who-its-for' style={{ color: '#64748B' }}>Who it is for</a>
         </div>
         <div style={{ display: 'flex', gap: 12 }}>
-          <a href='/signin' style={{ fontSize: 14, fontWeight: 500, padding: '8px 16px', borderRadius: 8, color: '#1A3C2A' }}>Sign in</a>
-          <a href="/registered" style={{ fontSize: 14, fontWeight: 500, padding: '8px 16px', borderRadius: 8, backgroundColor: '#1A3C2A', color: '#FFFFFF' }}>Request access</a>
+          <Link href="/signin" style={{ fontSize: 14, fontWeight: 500, padding: "8px 16px", borderRadius: 8, color: "#1A3C2A" }}>Sign in</Link>
+          <Link href="/registered" style={{ fontSize: 14, fontWeight: 500, padding: "8px 16px", borderRadius: 8, backgroundColor: "#1A3C2A", color: "#FFFFFF" }}>Request access</Link>
         </div>
       </div>
     </nav>
@@ -255,7 +256,7 @@ function Hero() {
           </Reveal>
           <Reveal delay={240}>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <a href="/registered" style={{ padding: "14px 28px", borderRadius: 8, backgroundColor: "#1A3C2A", color: "#FFFFFF", fontSize: 15, fontWeight: 600 }}>Request early access</a>
+              <Link href="/registered" style={{ padding: "14px 28px", borderRadius: 8, backgroundColor: "#1A3C2A", color: "#FFFFFF", fontSize: 15, fontWeight: 600 }}>Request early access</Link>
               <a href="#sample-brief" style={{ padding: "14px 28px", borderRadius: 8, border: "1px solid #E5E7EB", color: "#475569", fontSize: 15, fontWeight: 500 }}>See a sample brief</a>
             </div>
           </Reveal>
@@ -617,7 +618,7 @@ function Pricing() {
                   <span style={{ fontSize: 14, color: '#94A3B8' }}>{tier.period}</span>
                 </div>
                 <p style={{ fontSize: 14, lineHeight: 1.65, color: '#64748B', marginBottom: 16 }}>{tier.desc}</p>
-                <a href="/registered" style={{ display: 'inline-block', padding: '10px 20px', borderRadius: 8, backgroundColor: tier.highlight ? '#1A3C2A' : '#FFFFFF', color: tier.highlight ? '#FFFFFF' : '#1A3C2A', fontSize: 14, fontWeight: 600, border: '1px solid #1A3C2A', textAlign: 'center' }}>Get started</a>
+                <Link href="/registered" style={{ display: "inline-block", padding: "10px 20px", borderRadius: 8, backgroundColor: tier.highlight ? "#1A3C2A" : "#FFFFFF", color: tier.highlight ? "#FFFFFF" : "#1A3C2A", fontSize: 14, fontWeight: 600, border: "1px solid #1A3C2A", textAlign: "center" }}>Get started</Link>
               </div>
             </Reveal>
           ))}
