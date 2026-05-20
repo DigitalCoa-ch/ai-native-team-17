@@ -1,3 +1,51 @@
+
+
+// ─── Feature Icon Items ───────────────────────────────────────────────────────
+function FeatureIconItem({ color, icon }: { color: string; icon: string }) {
+  const colors: Record<string, { bg: string; border: string; dot: string }> = {
+    green:  { bg: '#F0FDF4', border: '#BBF7D0', dot: '#22C55E' },
+    blue:   { bg: '#EFF6FF', border: '#BFDBFE', dot: '#3B82F6' },
+    amber:  { bg: '#FFFBEB', border: '#FDE68A', dot: '#F59E0B' },
+    red:    { bg: '#FEF2F2', border: '#FECACA', dot: '#EF4444' },
+    purple: { bg: '#F5F3FF', border: '#DDD6FE', dot: '#8B5CF6' },
+  };
+  const c = colors[color] || colors.green;
+  return (
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: 48, height: 48 }}>
+      <rect width="48" height="48" rx="12" fill={c.bg}/>
+      <rect x="0.5" y="0.5" width="47" height="47" rx="11.5" stroke={c.border} strokeWidth="1"/>
+      {icon === 'doc' && <>
+        <rect x="12" y="10" width="18" height="22" rx="2" fill={c.dot} opacity="0.3"/>
+        <rect x="16" y="16" width="10" height="2" rx="1" fill={c.dot} opacity="0.6"/>
+        <rect x="16" y="21" width="14" height="2" rx="1" fill={c.dot} opacity="0.6"/>
+        <rect x="16" y="26" width="8" height="2" rx="1" fill={c.dot} opacity="0.6"/>
+      </>}
+      {icon === 'chart' && <>
+        <rect x="10" y="28" width="6" height="10" rx="1.5" fill={c.dot} opacity="0.5"/>
+        <rect x="19" y="22" width="6" height="16" rx="1.5" fill={c.dot} opacity="0.6"/>
+        <rect x="28" y="16" width="6" height="22" rx="1.5" fill={c.dot}/>
+        <path d="M10 14 L19 8 L28 12 L36 4" stroke={c.dot} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </>}
+      {icon === 'eye' && <>
+        <ellipse cx="24" cy="24" rx="14" ry="9" fill={c.dot} opacity="0.2"/>
+        <ellipse cx="24" cy="24" rx="14" ry="9" stroke={c.dot} strokeWidth="1.5"/>
+        <circle cx="24" cy="24" r="5" fill={c.dot} opacity="0.7"/>
+        <circle cx="24" cy="24" r="2" fill={c.dot}/>
+      </>}
+      {icon === 'bell' && <>
+        <path d="M24 10 C16 10 12 16 12 22 L12 28 L36 28 L36 22 C36 16 32 10 24 10Z" fill={c.dot} opacity="0.2" stroke={c.dot} strokeWidth="1.5" strokeLinejoin="round"/>
+        <path d="M22 28 L26 28" stroke={c.dot} strokeWidth="1.5" strokeLinecap="round"/>
+        <path d="M20 34 L28 34" stroke={c.dot} strokeWidth="1.5" strokeLinecap="round"/>
+      </>}
+      {icon === 'layers' && <>
+        <rect x="10" y="14" width="28" height="8" rx="2" fill={c.dot} opacity="0.5" transform="rotate(-3 24 18)"/>
+        <rect x="10" y="22" width="28" height="8" rx="2" fill={c.dot} opacity="0.7" transform="rotate(-1 24 26)"/>
+        <rect x="10" y="30" width="28" height="8" rx="2" fill={c.dot} opacity="0.9" transform="rotate(2 24 34)"/>
+      </>}
+    </svg>
+  );
+}
+
 'use client';
 import { useState, useEffect, useRef } from 'react';
 
@@ -257,6 +305,12 @@ function Problem() {
             </Reveal>
           ))}
         </div>
+        <Reveal delay={200}>
+          <div style={{ marginTop: 48, padding: 24, borderRadius: 12, border: '1px solid #E5E7EB', backgroundColor: '#FAFAFA' }}>
+            <p style={{ fontSize: 14, fontWeight: 600, color: '#1A3C2A', marginBottom: 24, textAlign: 'center' }}>Analyst workflow comparison</p>
+            <CompareIllustration />
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -325,7 +379,7 @@ function HowItWorks() {
           {[{num:'01',title:'Connect your watchlist',desc:'Add tickers or CIK numbers. No manual setup required per company.'},{num:'02',title:'Agent reads overnight',desc:'10-K, 10-Q, 8-K, and earnings call transcripts parsed and extracted.'},{num:'03',title:'Changes detected',desc:'Metrics compared to prior periods. Language scored across calls.'},{num:'04',title:'Brief delivered',desc:'Structured brief with metrics, flags, guidance diff, and quotes.'}].map((step,i)=>(
             <Reveal key={i} delay={i * 80}>
               <div style={{ padding: 24 }}>
-                <div style={{ width: 56, height: 56, marginBottom: 16, backgroundColor: '#1A3C2A', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="badge-glow" style={{ width: 56, height: 56, marginBottom: 16, backgroundColor: '#1A3C2A', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <span style={{ color: '#FFFFFF', fontWeight: 700, fontSize: 18 }}>{step.num}</span>
                 </div>
                 <h3 style={{ fontSize: 16, fontWeight: 600, color: '#1A1A1A', marginBottom: 8 }}>{step.title}</h3>
@@ -334,12 +388,25 @@ function HowItWorks() {
             </Reveal>
           ))}
         </div>
+        <Reveal delay={200}>
+          <div style={{ marginTop: 48, padding: 24, borderRadius: 12, border: '1px solid #E5E7EB', backgroundColor: '#FAFAFA' }}>
+            <ProcessStepsDiagram />
+          </div>
+        </Reveal>
       </div>
     </section>
   );
 }
 
 function Features() {
+  const features = [
+    { title: 'Full filing coverage', desc: 'Reads 10-K, 10-Q, 8-K, and earnings call transcripts. Processes every section.', color: 'green', icon: 'doc' },
+    { title: 'Period-over-period diff', desc: 'Every metric compared against the prior quarter and prior year. Guidance revisions flagged.', color: 'blue', icon: 'chart' },
+    { title: 'Language shift detection', desc: 'Tracks hedging words, tone changes, and deflected analyst questions across transcripts.', color: 'amber', icon: 'eye' },
+    { title: 'Real-time 8-K alerts', desc: 'When an 8-K is filed, the brief is delivered within 15 minutes - not the next morning.', color: 'red', icon: 'bell' },
+    { title: 'Structured brief format', desc: 'Every brief: key metrics, flags, guidance diff, notable quotes, and tone score.', color: 'green', icon: 'layers' },
+    { title: 'Watchlist scale', desc: 'Covers 1 to 500+ companies simultaneously. Adding a 31st stock costs zero analyst time.', color: 'purple', icon: 'chart' },
+  ];
   return (
     <section id="features" style={{ paddingTop: 96, paddingBottom: 96, paddingLeft: 24, paddingRight: 24, borderTop: '1px solid #E5E7EB' }}>
       <div style={{ maxWidth: 960, margin: '0 auto' }}>
@@ -350,11 +417,16 @@ function Features() {
           </div>
         </Reveal>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 24 }}>
-          {[{title:'Full filing coverage',desc:'Reads 10-K, 10-Q, 8-K, and earnings call transcripts. Processes every section.'},{title:'Period-over-period diff',desc:'Every metric compared against the prior quarter and prior year. Guidance revisions flagged.'},{title:'Language shift detection',desc:'Tracks hedging words, tone changes, and deflected analyst questions across transcripts.'},{title:'Real-time 8-K alerts',desc:'When an 8-K is filed, the brief is delivered within 15 minutes - not the next morning.'},{title:'Structured brief format',desc:'Every brief: key metrics, flags, guidance diff, notable quotes, and tone score.'},{title:'Watchlist scale',desc:'Covers 1 to 500+ companies simultaneously. Adding a 31st stock costs zero analyst time.'}].map((f,i)=>(
+          {features.map((f, i) => (
             <Reveal key={i} delay={i * 60}>
-              <div className="card-hover" style={{ padding: 24, borderRadius: 12, border: '1px solid #E5E7EB', backgroundColor: '#FAFAFA' }}>
-                <p style={{ fontSize: 15, fontWeight: 600, color: '#1A1A1A', marginBottom: 8 }}>{f.title}</p>
-                <p style={{ fontSize: 14, lineHeight: 1.65, color: '#64748B' }}>{f.desc}</p>
+              <div className="card-hover" style={{ padding: 24, borderRadius: 12, border: '1px solid #E5E7EB', backgroundColor: '#FAFAFA', display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+                <div style={{ flexShrink: 0, marginTop: 2 }}>
+                  <FeatureIconItem color={f.color} icon={f.icon} />
+                </div>
+                <div>
+                  <p style={{ fontSize: 15, fontWeight: 600, color: '#1A1A1A', marginBottom: 8 }}>{f.title}</p>
+                  <p style={{ fontSize: 14, lineHeight: 1.65, color: '#64748B' }}>{f.desc}</p>
+                </div>
               </div>
             </Reveal>
           ))}
@@ -467,11 +539,12 @@ function WhoItsFor() {
 
 function Differentiators() {
   const items = [
-    { title: 'Language shift detection', desc: 'Bloomberg gives you the numbers. Neither Bloomberg nor FactSet detect that a CFO used normalize for the first time, or stopped saying confident. That is where the alpha lives.' },
-    { title: 'Brief format, not raw data', desc: 'Terminals give analysts more data. BriefEdge gives them exactly the right pieces, pre-structured, with prior period context already applied.' },
-    { title: 'Real-time 8-K processing', desc: 'An 8-K filing triggers the full analysis pipeline within 15 minutes. Within the trading session, while the market is still reacting.' },
-    { title: 'Watchlist economics', desc: 'Adding a 31st stock costs zero analyst time with BriefEdge. With a terminal it costs reading hours.' },
+    { title: 'Language shift detection', desc: 'Bloomberg gives you the numbers. Neither Bloomberg nor FactSet detect that a CFO used normalize for the first time, or stopped saying confident. That is where the alpha lives.', color: 'amber' },
+    { title: 'Brief format, not raw data', desc: 'Terminals give analysts more data. BriefEdge gives them exactly the right pieces, pre-structured, with prior period context already applied.', color: 'green' },
+    { title: 'Real-time 8-K processing', desc: 'An 8-K filing triggers the full analysis pipeline within 15 minutes. Within the trading session, while the market is still reacting.', color: 'blue' },
+    { title: 'Watchlist economics', desc: 'Adding a 31st stock costs zero analyst time with BriefEdge. With a terminal it costs reading hours.', color: 'purple' },
   ];
+  const iconMap: Record<string, string> = { amber: 'eye', green: 'layers', blue: 'bell', purple: 'chart' };
   return (
     <section style={{ paddingTop: 96, paddingBottom: 96, paddingLeft: 24, paddingRight: 24, backgroundColor: '#FAFAFA', borderTop: '1px solid #E5E7EB' }}>
       <div style={{ maxWidth: 960, margin: '0 auto' }}>
@@ -484,13 +557,30 @@ function Differentiators() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
           {items.map((item, i) => (
             <Reveal key={i} delay={i * 80}>
-              <div className="card-hover" style={{ padding: 24, borderRadius: 12, border: '1px solid #E5E7EB', backgroundColor: '#FFFFFF' }}>
-                <p style={{ fontSize: 15, fontWeight: 600, color: '#1A1A1A', marginBottom: 8 }}>{item.title}</p>
-                <p style={{ fontSize: 14, lineHeight: 1.65, color: '#64748B' }}>{item.desc}</p>
+              <div className="card-hover" style={{ padding: 24, borderRadius: 12, border: '1px solid #E5E7EB', backgroundColor: '#FFFFFF', display: 'flex', gap: 16 }}>
+                <div style={{ flexShrink: 0 }}>
+                  <FeatureIconItem color={item.color} icon={iconMap[item.color]} />
+                </div>
+                <div>
+                  <p style={{ fontSize: 15, fontWeight: 600, color: '#1A1A1A', marginBottom: 8 }}>{item.title}</p>
+                  <p style={{ fontSize: 14, lineHeight: 1.65, color: '#64748B' }}>{item.desc}</p>
+                </div>
               </div>
             </Reveal>
           ))}
         </div>
+        <Reveal delay={200}>
+          <div style={{ marginTop: 48, padding: 24, borderRadius: 12, border: '1px solid #E5E7EB', backgroundColor: '#FAFAFA', display: 'flex', gap: 32, alignItems: 'center', flexWrap: 'wrap' }}>
+            <div style={{ flex: '1 1 300px' }}>
+              <p style={{ fontSize: 14, fontWeight: 600, color: '#1A3C2A', marginBottom: 16 }}>Data flow</p>
+              <DataFlowIllustration />
+            </div>
+            <div style={{ flex: '1 1 300px' }}>
+              <p style={{ fontSize: 14, fontWeight: 600, color: '#1A3C2A', marginBottom: 16 }}>Revenue growth</p>
+              <MetricChartIllustration />
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -560,240 +650,6 @@ function CTASection() {
   );
 }
 
-
-// ─── Typewriter Text ─────────────────────────────────────────────────────────
-function TypewriterText({ text, delay = 0 }: { text: string; delay?: number }) {
-  const [displayed, setDisplayed] = useState('');
-  const [started, setStarted] = useState(false);
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started) {
-          setStarted(true);
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.5 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [started]);
-
-  useEffect(() => {
-    if (!started) return;
-    const timeout = setTimeout(() => {
-      let i = 0;
-      const interval = setInterval(() => {
-        setDisplayed(text.slice(0, i + 1));
-        i++;
-        if (i >= text.length) clearInterval(interval);
-      }, 40);
-      return () => clearInterval(interval);
-    }, delay);
-    return () => clearTimeout(timeout);
-  }, [started, delay, text]);
-
-  return (
-    <span ref={ref} style={{ display: 'inline-block' }}>
-      <span className="animate-typewriter" style={{ display: 'inline-block', overflow: 'hidden', whiteSpace: 'nowrap' }}>
-        {displayed}
-      </span>
-      <span style={{ display: 'inline-block', width: 2, height: '1.1em', backgroundColor: '#1A3C2A', marginLeft: 1, verticalAlign: 'text-bottom', animation: started ? 'cursor-blink 0.8s step-end infinite' : 'none' }}/>
-    </span>
-  );
-}
-
-// ─── Animated Stat Counter ──────────────────────────────────────────────────
-function StatCounter({ value }: { value: string }) {
-  const { ref, visible } = useReveal();
-  const [display, setDisplay] = useState('0');
-  const numMatch = value.match(/[\d.]+/);
-  const prefix = value.match(/^[^0-9]*/)?.[0] || '';
-  const suffix2 = value.replace(/^[^0-9]*[\d.]+/, '');
-
-  useEffect(() => {
-    if (!visible || !numMatch) return;
-    const target = parseFloat(numMatch[0]);
-    const isDecimal = numMatch[0].includes('.');
-    const decimals = isDecimal ? numMatch[0].split('.')[1].length : 0;
-    let current = 0;
-    const step = target / 30;
-    const interval = setInterval(() => {
-      current = Math.min(current + step, target);
-      const formatted = isDecimal ? current.toFixed(decimals) : Math.floor(current).toString();
-      setDisplay(prefix + formatted + suffix2);
-      if (current >= target) clearInterval(interval);
-    }, 30);
-    return () => clearInterval(interval);
-  }, [visible, numMatch, prefix, suffix2]);
-
-  return (
-    <span ref={ref as React.RefObject<HTMLSpanElement>} className={`stat-animate ${visible ? 'visible' : ''}`} style={{ display: 'inline-block' }}>
-      {numMatch ? display : value}
-    </span>
-  );
-}
-
-// ─── EDGAR Watch Illustration ────────────────────────────────────────────────
-function EdgarWatchIllustration() {
-  return (
-    <svg viewBox="0 0 480 260" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', maxWidth: 480 }}>
-      <rect x="4" y="4" width="472" height="252" rx="12" fill="#0B1D2E" stroke="#1A3C2A" strokeWidth="1.5"/>
-      <rect x="4" y="4" width="472" height="36" rx="12" fill="#112840"/>
-      <rect x="4" y="32" width="472" height="8" fill="#112840"/>
-      <circle cx="28" cy="22" r="5" fill="#EF4444" className="animate-pulse-dot"/>
-      <rect x="38" y="16" width="34" height="12" rx="3" fill="#EF4444"/>
-      <rect x="41" y="19" width="28" height="6" rx="2" fill="#7F1D1D"/>
-      <rect x="90" y="17" width="120" height="6" rx="3" fill="#1A3C5C" opacity="0.8"/>
-      <circle cx="400" cy="22" r="5" fill="#EF4444" opacity="0.7"/>
-      <circle cx="420" cy="22" r="5" fill="#F59E0B" opacity="0.7"/>
-      <circle cx="440" cy="22" r="5" fill="#22C55E" opacity="0.7"/>
-      <rect x="16" y="50" width="80" height="5" rx="2" fill="#1A3C5C" opacity="0.6"/>
-      <rect x="16" y="62" width="440" height="1" fill="#1A3C5C" opacity="0.3"/>
-      <rect x="16" y="70" width="80" height="5" rx="2" fill="#22C55E" opacity="0.7"/>
-      <rect x="104" y="70" width="120" height="5" rx="2" fill="#94A3B8" opacity="0.5"/>
-      <rect x="232" y="70" width="60" height="5" rx="2" fill="#94A3B8" opacity="0.4"/>
-      <rect x="300" y="68" width="50" height="10" rx="2" fill="#166534" stroke="#22C55E" strokeWidth="0.5"/>
-      <rect x="304" y="71" width="42" height="4" rx="1" fill="#4ADE80" opacity="0.7"/>
-      <circle cx="380" cy="73" r="4" fill="#22C55E" opacity="0.5"/>
-      <circle cx="400" cy="73" r="4" fill="#22C55E" opacity="0.5"/>
-      <circle cx="420" cy="73" r="4" fill="#22C55E" opacity="0.5"/>
-      <rect x="440" y="68" width="28" height="10" rx="2" fill="#112840" stroke="#1A3C5C" strokeWidth="0.5"/>
-      <rect x="443" y="71" width="22" height="4" rx="1" fill="#22C55E" opacity="0.4"/>
-      <rect x="16" y="90" width="70" height="5" rx="2" fill="#3B82F6" opacity="0.7"/>
-      <rect x="94" y="90" width="140" height="5" rx="2" fill="#94A3B8" opacity="0.5"/>
-      <rect x="242" y="90" width="50" height="5" rx="2" fill="#94A3B8" opacity="0.4"/>
-      <rect x="300" y="88" width="50" height="10" rx="2" fill="#1E3A5F" stroke="#3B82F6" strokeWidth="0.5"/>
-      <rect x="304" y="91" width="42" height="4" rx="1" fill="#60A5FA" opacity="0.7"/>
-      <circle cx="380" cy="93" r="4" fill="#3B82F6" opacity="0.5"/>
-      <circle cx="400" cy="93" r="4" fill="#3B82F6" opacity="0.5"/>
-      <circle cx="420" cy="93" r="4" fill="#3B82F6" opacity="0.5"/>
-      <rect x="440" y="88" width="28" height="10" rx="2" fill="#112840" stroke="#1A3C5C" strokeWidth="0.5"/>
-      <rect x="443" y="91" width="22" height="4" rx="1" fill="#60A5FA" opacity="0.4"/>
-      <rect x="14" y="107" width="452" height="20" rx="4" fill="#1A3C2A" opacity="0.3" stroke="#1A3C2A" strokeWidth="0.5"/>
-      <rect x="16" y="112" width="60" height="5" rx="2" fill="#F59E0B" opacity="0.9"/>
-      <rect x="84" y="112" width="160" height="5" rx="2" fill="#F8FAFC" opacity="0.7"/>
-      <rect x="252" y="112" width="70" height="5" rx="2" fill="#F59E0B" opacity="0.6"/>
-      <rect x="330" y="110" width="60" height="12" rx="3" fill="#92400E" stroke="#F59E0B" strokeWidth="0.75"/>
-      <rect x="336" y="114" width="48" height="4" rx="1" fill="#FDE68A" opacity="0.8"/>
-      <circle cx="420" cy="116" r="5" fill="#EF4444" opacity="0.8" className="animate-pulse-dot"/>
-      <rect x="440" y="110" width="28" height="10" rx="2" fill="#92400E" stroke="#F59E0B" strokeWidth="0.5"/>
-      <rect x="443" y="113" width="22" height="4" rx="1" fill="#F59E0B" opacity="0.5"/>
-      <rect x="16" y="136" width="75" height="5" rx="2" fill="#94A3B8" opacity="0.5"/>
-      <rect x="99" y="136" width="130" height="5" rx="2" fill="#94A3B8" opacity="0.4"/>
-      <rect x="237" y="136" width="55" height="5" rx="2" fill="#94A3B8" opacity="0.3"/>
-      <rect x="300" y="134" width="50" height="10" rx="2" fill="#1E3A5F" stroke="#1A3C5C" strokeWidth="0.5"/>
-      <rect x="304" y="137" width="42" height="4" rx="1" fill="#60A5FA" opacity="0.4"/>
-      <circle cx="380" cy="140" r="4" fill="#94A3B8" opacity="0.4"/>
-      <circle cx="400" cy="140" r="4" fill="#94A3B8" opacity="0.4"/>
-      <circle cx="420" cy="140" r="4" fill="#94A3B8" opacity="0.4"/>
-      <rect x="440" y="134" width="28" height="10" rx="2" fill="#112840" stroke="#1A3C5C" strokeWidth="0.5"/>
-      <rect x="443" y="137" width="22" height="4" rx="1" fill="#60A5FA" opacity="0.3"/>
-      <rect x="16" y="154" width="65" height="5" rx="2" fill="#A78BFA" opacity="0.6"/>
-      <rect x="89" y="154" width="145" height="5" rx="2" fill="#94A3B8" opacity="0.4"/>
-      <rect x="242" y="154" width="60" height="5" rx="2" fill="#94A3B8" opacity="0.3"/>
-      <rect x="310" y="152" width="50" height="10" rx="2" fill="#3B1D9E" stroke="#8B5CF6" strokeWidth="0.5"/>
-      <rect x="314" y="155" width="42" height="4" rx="1" fill="#A78BFA" opacity="0.5"/>
-      <circle cx="380" cy="157" r="4" fill="#8B5CF6" opacity="0.4"/>
-      <circle cx="400" cy="157" r="4" fill="#8B5CF6" opacity="0.4"/>
-      <circle cx="420" cy="157" r="4" fill="#8B5CF6" opacity="0.4"/>
-      <rect x="440" y="152" width="28" height="10" rx="2" fill="#112840" stroke="#1A3C5C" strokeWidth="0.5"/>
-      <rect x="443" y="155" width="22" height="4" rx="1" fill="#A78BFA" opacity="0.3"/>
-      <rect x="16" y="172" width="448" height="1" fill="#1A3C5C" opacity="0.3"/>
-      <rect x="16" y="182" width="90" height="5" rx="2" fill="#1A3C5C" opacity="0.5"/>
-      <rect x="16" y="194" width="60" height="8" rx="2" fill="#22C55E" opacity="0.8"/>
-      <rect x="84" y="196" width="20" height="4" rx="1" fill="#4ADE80" opacity="0.5"/>
-      <rect x="140" y="182" width="90" height="5" rx="2" fill="#1A3C5C" opacity="0.5"/>
-      <rect x="140" y="194" width="50" height="8" rx="2" fill="#3B82F6" opacity="0.8"/>
-      <rect x="196" y="196" width="20" height="4" rx="1" fill="#60A5FA" opacity="0.5"/>
-      <rect x="264" y="182" width="90" height="5" rx="2" fill="#1A3C5C" opacity="0.5"/>
-      <rect x="264" y="194" width="70" height="8" rx="2" fill="#F59E0B" opacity="0.8"/>
-      <rect x="340" y="196" width="20" height="4" rx="1" fill="#FDE68A" opacity="0.5"/>
-      <rect x="16" y="220" width="448" height="22" rx="4" fill="#0B1D2E" stroke="#1A3C5C" strokeWidth="0.75"/>
-      <rect x="20" y="224" width="180" height="14" rx="3" fill="#112840"/>
-      <rect x="22" y="226" width="140" height="10" rx="2" fill="#1A3C2A" opacity="0.8"/>
-      <rect x="22" y="226" width="80" height="10" rx="2" fill="#22C55E" opacity="0.6"/>
-      <rect x="210" y="226" width="40" height="8" rx="2" fill="#1A3C5C" opacity="0.5"/>
-      <rect x="256" y="226" width="40" height="8" rx="2" fill="#1A3C5C" opacity="0.5"/>
-      <rect x="302" y="226" width="40" height="8" rx="2" fill="#1A3C5C" opacity="0.5"/>
-      <rect x="348" y="226" width="40" height="8" rx="2" fill="#1A3C5C" opacity="0.5"/>
-      <rect x="394" y="226" width="40" height="8" rx="2" fill="#1A3C5C" opacity="0.5"/>
-      <rect x="440" y="226" width="20" height="8" rx="2" fill="#22C55E" opacity="0.5"/>
-      <circle cx="448" cy="230" r="3" fill="#EF4444" opacity="0.9" className="animate-pulse-dot"/>
-    </svg>
-  );
-}
-
-// ─── Simulated Filing Feed (animated "video") ────────────────────────────────
-function FilingFeedAnimation() {
-  return (
-    <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 8, backgroundColor: '#0B1D2E', height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      {/* Dark background with scan lines */}
-      <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(26,60,42,0.03) 2px, rgba(26,60,42,0.03) 4px)', pointerEvents: 'none' }}/>
-      {/* Animated scan bar */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, transparent, #22C55E, transparent)', animation: 'scan-highlight 3s ease-in-out infinite', opacity: 0.6 }}/>
-      {/* Filing docs flowing through */}
-      <div style={{ position: 'absolute', top: '-20px', left: '20%', animation: 'doc-feed 4s ease-out infinite' }}>
-        <svg width="60" height="76" viewBox="0 0 60 76" fill="none"><rect x="2" y="2" width="38" height="50" rx="4" fill="white" stroke="#1A3C2A" strokeWidth="1.5"/><rect x="8" y="12" width="20" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="8" y="20" width="28" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="8" y="28" width="18" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="2" y="54" width="38" height="20" rx="0" fill="#22C55E" opacity="0.2"/></svg>
-      </div>
-      <div style={{ position: 'absolute', top: '-20px', left: '55%', animation: 'doc-feed 4s ease-out infinite 1.2s' }}>
-        <svg width="60" height="76" viewBox="0 0 60 76" fill="none"><rect x="2" y="2" width="38" height="50" rx="4" fill="white" stroke="#1A3C2A" strokeWidth="1.5"/><rect x="8" y="12" width="20" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="8" y="20" width="28" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="8" y="28" width="18" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="2" y="54" width="38" height="20" rx="0" fill="#3B82F6" opacity="0.2"/></svg>
-      </div>
-      <div style={{ position: 'absolute', top: '-20px', left: '80%', animation: 'doc-feed 4s ease-out infinite 2.4s' }}>
-        <svg width="60" height="76" viewBox="0 0 60 76" fill="none"><rect x="2" y="2" width="38" height="50" rx="4" fill="white" stroke="#1A3C2A" strokeWidth="1.5"/><rect x="8" y="12" width="20" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="8" y="20" width="28" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="8" y="28" width="18" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="2" y="54" width="38" height="20" rx="0" fill="#F59E0B" opacity="0.2"/></svg>
-      </div>
-      {/* Center label */}
-      <div style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
-        <p style={{ fontSize: 13, fontFamily: 'monospace', color: '#22C55E', marginBottom: 4 }}>INGESTING</p>
-        <div style={{ display: 'flex', gap: 6, justifyContent: 'center' }}>
-          <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#22C55E', animation: 'pulse-dot 1s ease-in-out infinite' }}/>
-          <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#22C55E', animation: 'pulse-dot 1s ease-in-out infinite 0.2s' }}/>
-          <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#22C55E', animation: 'pulse-dot 1s ease-in-out infinite 0.4s' }}/>
-        </div>
-        <p style={{ fontSize: 11, color: '#94A3B8', marginTop: 8, fontFamily: 'monospace' }}>10-K / 10-Q / 8-K / Earnings Call</p>
-      </div>
-    </div>
-  );
-}
-
-// ─── Trust Bar Ticker Tape ──────────────────────────────────────────────────
-const TICKER_ITEMS = [
-  'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'NVDA', 'TSLA', 'JPM', 'GS', 'BAC',
-  'MS', 'C', 'BRK.B', 'V', 'MA', 'BLK', 'SCHW', 'AXP', 'USB', 'PNC',
-  'TFC', 'COF', 'ALL', 'TRV', 'MET', 'PRU', 'AIG', 'L', 'CINF', 'RJF',
-  'AMD', 'INTC', 'QCOM', 'TXN', 'AVGO', 'ORCL', 'SAP', 'CRM', 'NOW', 'SNOW',
-  'NFLX', 'DIS', 'CMCSA', 'T', 'VZ', 'TMUS', 'DISH', 'CHTR', 'WBD', 'PARA',
-  'KO', 'PEP', 'PG', 'MCD', 'SBUX', 'NKE', 'HD', 'LOW', 'COST', 'WMT',
-];
-
-function TrustBar() {
-  return (
-    <section style={{ paddingTop: 48, paddingBottom: 48, paddingLeft: 0, paddingRight: 0, borderTop: "1px solid #E5E7EB", backgroundColor: "#FFFFFF", overflow: 'hidden' }}>
-      <div style={{ maxWidth: 960, margin: "0 auto", textAlign: "center", marginBottom: 16 }}>
-        <p style={{ fontSize: 13, color: "#94A3B8", marginBottom: 0 }}>
-          Used by analysts at long/short equity funds, family offices, and research boutiques
-        </p>
-      </div>
-      <div style={{ position: 'relative' }}>
-        <div className="ticker-wrap" style={{ overflow: 'hidden' }}>
-          <div style={{ display: 'flex', animation: 'ticker 40s linear infinite', width: 'max-content' }}>
-            {[...TICKER_ITEMS, ...TICKER_ITEMS].map((ticker, i) => (
-              <span key={i} style={{ padding: '0 20px', fontSize: 13, fontFamily: 'monospace', fontWeight: 600, color: '#94A3B8', whiteSpace: 'nowrap' }}>
-                {ticker}
-                <span style={{ marginLeft: 20, color: '#CBD5E1' }}>•</span>
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Footer() {
   return (
     <footer style={{ paddingTop: 32, paddingBottom: 32, paddingLeft: 24, paddingRight: 24, borderTop: '1px solid #E5E7EB', backgroundColor: '#FFFFFF' }}>
@@ -813,5 +669,135 @@ function Footer() {
         <p style={{ fontSize: 12, color: '#94A3B8' }}>AI analyst intelligence for the buy side.</p>
       </div>
     </footer>
+  );
+}
+
+// ─── Data Flow Illustration ──────────────────────────────────────────────────
+function DataFlowIllustration() {
+  return (
+    <svg viewBox="0 0 420 200" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", maxWidth: 420 }}>
+      <rect x="10" y="50" width="80" height="100" rx="8" fill="#FEF2F2" stroke="#FECACA" strokeWidth="1.5"/>
+      <rect x="20" y="64" width="50" height="5" rx="2" fill="#DC2626" opacity="0.6"/>
+      <rect x="20" y="76" width="40" height="4" rx="2" fill="#94A3B8" opacity="0.5"/>
+      <rect x="20" y="86" width="55" height="4" rx="2" fill="#94A3B8" opacity="0.5"/>
+      <rect x="20" y="96" width="35" height="4" rx="2" fill="#94A3B8" opacity="0.5"/>
+      <rect x="20" y="108" width="50" height="4" rx="2" fill="#94A3B8" opacity="0.5"/>
+      <rect x="20" y="120" width="45" height="4" rx="2" fill="#94A3B8" opacity="0.5"/>
+      <rect x="20" y="132" width="55" height="4" rx="2" fill="#94A3B8" opacity="0.5"/>
+      <path d="M95 100 L140 100" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="4 3"/>
+      <path d="M130 94 L140 100 L130 106" stroke="#CBD5E1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <circle cx="175" cy="100" r="36" fill="#1A3C2A" opacity="0.08"/>
+      <circle cx="175" cy="100" r="26" fill="#1A3C2A" opacity="0.12"/>
+      <circle cx="175" cy="100" r="18" fill="#1A3C2A" className="animate-pulse-dot"/>
+      {[0, 72, 144, 216, 288].map((deg, i) => (
+        <circle key={i} cx={175 + 34 * Math.cos((deg * Math.PI) / 180)} cy={100 + 34 * Math.sin((deg * Math.PI) / 180)} r="4" fill={["#22C55E","#3B82F6","#F59E0B","#DC2626","#8B5CF6"][i]} opacity="0.7"/>
+      ))}
+      <path d="M206 100 L250 100" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="4 3"/>
+      <path d="M240 94 L250 100 L240 106" stroke="#CBD5E1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <rect x="255" y="50" width="155" height="100" rx="8" fill="#F0FDF4" stroke="#BBF7D0" strokeWidth="1.5"/>
+      <rect x="265" y="64" width="70" height="5" rx="2" fill="#22C55E" opacity="0.7"/>
+      <rect x="265" y="76" width="130" height="4" rx="2" fill="#1A3C2A" opacity="0.3"/>
+      <rect x="265" y="88" width="110" height="4" rx="2" fill="#94A3B8" opacity="0.4"/>
+      <rect x="265" y="100" width="80" height="14" rx="3" fill="#FEF2F2" stroke="#FECACA" strokeWidth="0.75"/>
+      <rect x="271" y="105" width="18" height="5" rx="1.5" fill="#DC2626" opacity="0.7"/>
+      <rect x="293" y="106" width="48" height="3" rx="1" fill="#94A3B8" opacity="0.4"/>
+      <rect x="265" y="120" width="70" height="14" rx="3" fill="#FFFBEB" stroke="#FDE68A" strokeWidth="0.75"/>
+      <rect x="271" y="125" width="18" height="5" rx="1.5" fill="#D97706" opacity="0.7"/>
+      <rect x="293" y="126" width="38" height="3" rx="1" fill="#94A3B8" opacity="0.4"/>
+      <rect x="20" y="158" width="60" height="14" rx="4" fill="#0B1D2E" opacity="0.6"/>
+      <rect x="25" y="161" width="50" height="8" rx="2" fill="#F8FAFC" opacity="0.7"/>
+      <rect x="145" y="158" width="60" height="14" rx="4" fill="#0B1D2E" opacity="0.6"/>
+      <rect x="150" y="161" width="50" height="8" rx="2" fill="#F8FAFC" opacity="0.7"/>
+      <rect x="270" y="158" width="60" height="14" rx="4" fill="#0B1D2E" opacity="0.6"/>
+      <rect x="275" y="161" width="50" height="8" rx="2" fill="#F8FAFC" opacity="0.7"/>
+    </svg>
+  );
+}
+
+// ─── Metric Chart Illustration ───────────────────────────────────────────────
+function MetricChartIllustration() {
+  return (
+    <svg viewBox="0 0 360 160" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", maxWidth: 360 }}>
+      <rect x="4" y="4" width="352" height="152" rx="8" fill="#FAFAFA" stroke="#E5E7EB" strokeWidth="1.5"/>
+      {[0, 40, 80, 120].map((y, i) => (
+        <line key={i} x1="40" y1={y + 24} x2="340" y2={y + 24} stroke="#E5E7EB" strokeWidth="0.75" opacity="0.6"/>
+      ))}
+      <path d="M50 120 L88 110 L126 100 L164 105 L202 85 L240 75 L278 70 L316 60 L316 140 L50 140 Z" fill="#22C55E" opacity="0.1"/>
+      <path d="M50 120 L88 110 L126 100 L164 105 L202 85 L240 75 L278 70 L316 60" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      {[[50,120],[88,110],[126,100],[164,105],[202,85],[240,75],[278,70]].map(([cx,cy], i) => (
+        <circle key={i} cx={cx} cy={cy} r="4" fill="#22C55E"/>
+      ))}
+      <circle cx="316" cy="60" r="5" fill="#22C55E" className="animate-pulse-dot"/>
+      <path d="M50 120 L316 60" stroke="#22C55E" strokeWidth="1" strokeDasharray="4 4" opacity="0.4"/>
+      <rect x="280" y="38" width="70" height="22" rx="4" fill="#F0FDF4" stroke="#BBF7D0" strokeWidth="0.75"/>
+      <rect x="284" y="43" width="62" height="5" rx="2" fill="#22C55E" opacity="0.7"/>
+      <rect x="284" y="52" width="40" height="4" rx="2" fill="#94A3B8" opacity="0.4"/>
+      <path d="M288 52 L293 57 L301 48" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+// ─── Process Steps Diagram ──────────────────────────────────────────────────
+function ProcessStepsDiagram() {
+  const steps = [{ num: "01", label: "Watchlist" }, { num: "02", label: "Overnight" }, { num: "03", label: "Analysis" }, { num: "04", label: "Brief" }];
+  const colors = ["#1A3C2A", "#3B82F6", "#F59E0B", "#22C55E"];
+  return (
+    <svg viewBox="0 0 480 120" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", maxWidth: 480 }}>
+      {steps.map((step, i) => {
+        const cx = 60 + i * 120;
+        return (
+          <g key={i}>
+            <circle cx={cx} cy={60} r={i === 0 ? 28 : 24} fill={colors[i]} opacity={0.15 + i * 0.1} stroke={colors[i]} strokeWidth="1.5"/>
+            <text x={cx} y={65} textAnchor="middle" fill={colors[i]} fontSize="12" fontWeight="700" fontFamily="monospace">{step.num}</text>
+            <rect x={cx - 30} y={95} width={60} height={14} rx={4} fill={colors[i]} opacity="0.7"/>
+            <text x={cx} y={105} textAnchor="middle" fill="white" fontSize="10" fontWeight="600">{step.label}</text>
+            {i < steps.length - 1 && (
+              <>
+                <path d={"M" + (cx + 30) + " 60 L" + (cx + 90) + " 60"} stroke={colors[i]} strokeWidth="1.5" strokeDasharray="4 3" opacity="0.5"/>
+                <path d={"M" + (cx + 82) + " 54 L" + (cx + 90) + " 60 L" + (cx + 82) + " 66"} stroke={colors[i]} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.5"/>
+              </>
+            )}
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+// ─── Compare Illustration ───────────────────────────────────────────────────
+function CompareIllustration() {
+  return (
+    <svg viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", maxWidth: 380 }}>
+      <rect x="4" y="4" width="170" height="192" rx="8" fill="#FEF2F2" stroke="#FECACA" strokeWidth="1.5"/>
+      <rect x="12" y="12" width="154" height="22" rx="4" fill="#FEE2E2" opacity="0.6"/>
+      <rect x="18" y="17" width="80" height="6" rx="2" fill="#DC2626" opacity="0.5"/>
+      <rect x="18" y="28" width="60" height="4" rx="2" fill="#94A3B8" opacity="0.4"/>
+      <rect x="12" y="44" width="154" height="10" rx="2" fill="#E5E7EB" opacity="0.4"/>
+      <rect x="12" y="60" width="154" height="10" rx="2" fill="#E5E7EB" opacity="0.4"/>
+      <rect x="12" y="76" width="154" height="10" rx="2" fill="#E5E7EB" opacity="0.4"/>
+      <rect x="12" y="92" width="154" height="10" rx="2" fill="#E5E7EB" opacity="0.4"/>
+      <rect x="12" y="108" width="154" height="10" rx="2" fill="#E5E7EB" opacity="0.4"/>
+      <rect x="12" y="124" width="100" height="10" rx="2" fill="#E5E7EB" opacity="0.4"/>
+      <rect x="12" y="148" width="80" height="10" rx="2" fill="#E5E7EB" opacity="0.3"/>
+      <rect x="12" y="164" width="60" height="10" rx="2" fill="#E5E7EB" opacity="0.3"/>
+      <text x="89" y="186" textAnchor="middle" fill="#DC2626" fontSize="11" fontWeight="700">Without BriefEdge</text>
+      <rect x="206" y="4" width="170" height="192" rx="8" fill="#F0FDF4" stroke="#BBF7D0" strokeWidth="1.5"/>
+      <rect x="214" y="12" width="154" height="22" rx="4" fill="#DCFCE7" opacity="0.6"/>
+      <rect x="220" y="17" width="80" height="6" rx="2" fill="#22C55E" opacity="0.7"/>
+      <rect x="220" y="28" width="60" height="4" rx="2" fill="#94A3B8" opacity="0.4"/>
+      <rect x="214" y="44" width="50" height="10" rx="2" fill="#BBF7D0" opacity="0.7"/>
+      <rect x="270" y="44" width="98" height="10" rx="2" fill="#E5E7EB" opacity="0.4"/>
+      <rect x="214" y="60" width="154" height="10" rx="2" fill="#E5E7EB" opacity="0.4"/>
+      <rect x="214" y="76" width="100" height="10" rx="2" fill="#FFFBEB" opacity="0.6"/>
+      <rect x="320" y="76" width="48" height="10" rx="2" fill="#E5E7EB" opacity="0.3"/>
+      <rect x="214" y="92" width="80" height="10" rx="2" fill="#BBF7D0" opacity="0.5"/>
+      <rect x="300" y="92" width="68" height="10" rx="2" fill="#E5E7EB" opacity="0.3"/>
+      <rect x="214" y="108" width="120" height="10" rx="2" fill="#FEF2F2" opacity="0.6"/>
+      <rect x="340" y="108" width="28" height="10" rx="2" fill="#E5E7EB" opacity="0.3"/>
+      <rect x="214" y="124" width="60" height="10" rx="2" fill="#BBF7D0" opacity="0.5"/>
+      <rect x="214" y="148" width="154" height="10" rx="2" fill="#BBF7D0" opacity="0.5"/>
+      <rect x="214" y="164" width="100" height="10" rx="2" fill="#22C55E" opacity="0.4"/>
+      <text x="291" y="186" textAnchor="middle" fill="#16A34A" fontSize="11" fontWeight="700">With BriefEdge</text>
+    </svg>
   );
 }
