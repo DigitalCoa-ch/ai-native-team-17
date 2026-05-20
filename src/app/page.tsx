@@ -188,27 +188,32 @@ function Hero() {
   return (
     <section className="hero-bg" style={{ paddingTop: 160, paddingBottom: 96, paddingLeft: 24, paddingRight: 24, position: 'relative', overflow: 'hidden' }}>
       <HeroDecorations />
-      <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", position: 'relative', zIndex: 1 }}>
-        <Reveal>
-          <p style={{ fontSize: 12, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "#1A3C2A", marginBottom: 24 }}>
-            Equity Research Infrastructure
-          </p>
-        </Reveal>
-        <Reveal delay={80}>
-          <h1 style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 700, lineHeight: 1.15, letterSpacing: "-0.02em", color: "#1A1A1A", marginBottom: 24 }}>
-            Your analyst reads everything.<br/>Overnight.
-          </h1>
-        </Reveal>
+      <div style={{ maxWidth: 960, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 64, alignItems: 'center', position: 'relative', zIndex: 1 }}>
+        <div>
+          <Reveal>
+            <p style={{ fontSize: 12, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "#1A3C2A", marginBottom: 24 }}>
+              Equity Research Infrastructure
+            </p>
+          </Reveal>
+          <Reveal delay={80}>
+            <h1 style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 700, lineHeight: 1.15, letterSpacing: "-0.02em", color: "#1A1A1A", marginBottom: 24 }}>
+              Your analyst reads everything.<br/>Overnight.
+            </h1>
+          </Reveal>
+          <Reveal delay={160}>
+            <p style={{ fontSize: 18, lineHeight: 1.65, color: "#475569", marginBottom: 40 }}>
+              BriefEdge monitors SEC filings across your watchlist and delivers structured analyst briefs before market open.
+            </p>
+          </Reveal>
+          <Reveal delay={240}>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <a href="#cta" style={{ padding: "14px 28px", borderRadius: 8, backgroundColor: "#1A3C2A", color: "#FFFFFF", fontSize: 15, fontWeight: 600 }}>Request early access</a>
+              <a href="#sample-brief" style={{ padding: "14px 28px", borderRadius: 8, border: "1px solid #E5E7EB", color: "#475569", fontSize: 15, fontWeight: 500 }}>See a sample brief</a>
+            </div>
+          </Reveal>
+        </div>
         <Reveal delay={160}>
-          <p style={{ fontSize: 18, lineHeight: 1.65, color: "#475569", maxWidth: 560, margin: "0 auto 40px" }}>
-            BriefEdge monitors SEC filings across your watchlist and delivers structured analyst briefs before market open.
-          </p>
-        </Reveal>
-        <Reveal delay={240}>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="#cta" style={{ padding: "14px 28px", borderRadius: 8, backgroundColor: "#1A3C2A", color: "#FFFFFF", fontSize: 15, fontWeight: 600 }}>Request early access</a>
-            <a href="#sample-brief" style={{ padding: "14px 28px", borderRadius: 8, border: "1px solid #E5E7EB", color: "#475569", fontSize: 15, fontWeight: 500 }}>See a sample brief</a>
-          </div>
+          <EdgarWatchIllustration />
         </Reveal>
       </div>
     </section>
@@ -245,7 +250,7 @@ function Problem() {
           {[{stat:'60-70%',label:'of earnings week spent on extraction',desc:'Hours pulling numbers, building comparison tables, and diffing prior filings - not forming views.'},{label:'Soft signals get missed at scale',desc:'A CFO used normalize for the first time. A question was deflected twice. These shifts precede hard misses by quarters and are invisible at scale.'},{label:'The edge is in what takes time to read',desc:'Numbers are public the moment they are filed. Alpha is in the MD&A narrative, risk factor changes, and tone of the call - which takes the most time.'}].map((item,i)=>(
             <Reveal key={i} delay={i * 80}>
               <div style={{ padding: 32, borderRadius: 12, border: '1px solid #E5E7EB', backgroundColor: '#FAFAFA' }}>
-                {item.stat && <p style={{ fontSize: 36, fontWeight: 700, color: '#DC2626', marginBottom: 8 }}>{item.stat}</p>}
+                {item.stat && <p style={{ fontSize: 36, fontWeight: 700, color: '#DC2626', marginBottom: 8 }}><StatCounter value={item.stat} /></p>}
                 <p style={{ fontSize: 16, fontWeight: 600, color: '#1A1A1A', marginBottom: 8 }}>{item.label}</p>
                 <p style={{ fontSize: 14, lineHeight: 1.65, color: '#64748B' }}>{item.desc}</p>
               </div>
@@ -279,23 +284,26 @@ function Solution() {
           </div>
         </Reveal>
         <Reveal delay={120}>
-          <div style={{ padding: 24, borderRadius: 12, border: '1px solid #E5E7EB', backgroundColor: '#FAFAFA' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 16, marginBottom: 16, borderBottom: '1px solid #E5E7EB' }}>
-              <span style={{ fontSize: 13, fontWeight: 500, color: '#1A1A1A' }}>Pipeline status</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#22C55E' }}/>
-                <span style={{ fontSize: 12, color: '#22C55E' }}>Live</span>
-              </div>
-            </div>
-            {[{step:'01',name:'Document ingestion',status:'complete'},{step:'02',name:'NLP parsing',status:'complete'},{step:'03',name:'Metric extraction',status:'complete'},{step:'04',name:'Language analysis',status:'complete'},{step:'05',name:'Flag generation',status:'complete'},{step:'06',name:'Brief assembly',status:'pending'}].map((item,i)=>(
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, paddingTop: 12, paddingBottom: 12 }}>
-                <span style={{ fontSize: 11, fontFamily: 'monospace', color: '#94A3B8', width: 24 }}>{item.step}</span>
-                <span style={{ fontSize: 13, flex: 1, color: '#475569' }}>{item.name}</span>
-                <div style={{ width: 80, height: 4, borderRadius: 2, backgroundColor: '#E5E7EB' }}>
-                  <div style={{ width: item.status==='complete'?'100%':'0%', height: '100%', borderRadius: 2, backgroundColor: '#1A3C2A', transition: 'width 1s ease' }}/>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={{ padding: 24, borderRadius: 12, border: '1px solid #E5E7EB', backgroundColor: '#FAFAFA' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 16, marginBottom: 16, borderBottom: '1px solid #E5E7EB' }}>
+                <span style={{ fontSize: 13, fontWeight: 500, color: '#1A1A1A' }}>Pipeline status</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#22C55E' }}/>
+                  <span style={{ fontSize: 12, color: '#22C55E' }}>Live</span>
                 </div>
               </div>
-            ))}
+              {[{step:'01',name:'Document ingestion',status:'complete'},{step:'02',name:'NLP parsing',status:'complete'},{step:'03',name:'Metric extraction',status:'complete'},{step:'04',name:'Language analysis',status:'complete'},{step:'05',name:'Flag generation',status:'complete'},{step:'06',name:'Brief assembly',status:'pending'}].map((item,i)=>(
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, paddingTop: 12, paddingBottom: 12 }}>
+                  <span style={{ fontSize: 11, fontFamily: 'monospace', color: '#94A3B8', width: 24 }}>{item.step}</span>
+                  <span style={{ fontSize: 13, flex: 1, color: '#475569' }}>{item.name}</span>
+                  <div style={{ width: 80, height: 4, borderRadius: 2, backgroundColor: '#E5E7EB' }}>
+                    <div style={{ width: item.status==='complete'?'100%':'0%', height: '100%', borderRadius: 2, backgroundColor: '#1A3C2A', transition: 'width 1s ease' }}/>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <FilingFeedAnimation />
           </div>
         </Reveal>
       </div>
@@ -408,9 +416,11 @@ function SampleBrief() {
             </div>
             <div>
               <p style={{ fontSize: 12, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#1A3C2A', marginBottom: 12 }}>Notable quote</p>
-              <p style={{ fontSize: 14, color: '#475569', fontStyle: 'italic', borderLeft: '3px solid #1A3C2A', paddingLeft: 16, lineHeight: 1.65 }}>
-                "We are investing heavily in infrastructure today to capture the opportunity ahead, and we expect this to normalise as AI workloads mature." - CFO
-              </p>
+              <div style={{ borderLeft: '3px solid #1A3C2A', paddingLeft: 16 }}>
+                <p style={{ fontSize: 14, color: '#475569', fontStyle: 'italic', lineHeight: 1.65 }}>
+                  <TypewriterText text="We are investing heavily in infrastructure today to capture the opportunity ahead, and we expect this to normalise as AI workloads mature. - CFO" delay={800} />
+                </p>
+              </div>
             </div>
           </div>
         </Reveal>
@@ -545,6 +555,240 @@ function CTASection() {
           </div>
           <p style={{ fontSize: 12, color: '#94A3B8', marginTop: 16 }}>Join analysts covering 500+ stocks. No card required.</p>
         </Reveal>
+      </div>
+    </section>
+  );
+}
+
+
+// ─── Typewriter Text ─────────────────────────────────────────────────────────
+function TypewriterText({ text, delay = 0 }: { text: string; delay?: number }) {
+  const [displayed, setDisplayed] = useState('');
+  const [started, setStarted] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started) {
+          setStarted(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [started]);
+
+  useEffect(() => {
+    if (!started) return;
+    const timeout = setTimeout(() => {
+      let i = 0;
+      const interval = setInterval(() => {
+        setDisplayed(text.slice(0, i + 1));
+        i++;
+        if (i >= text.length) clearInterval(interval);
+      }, 40);
+      return () => clearInterval(interval);
+    }, delay);
+    return () => clearTimeout(timeout);
+  }, [started, delay, text]);
+
+  return (
+    <span ref={ref} style={{ display: 'inline-block' }}>
+      <span className="animate-typewriter" style={{ display: 'inline-block', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+        {displayed}
+      </span>
+      <span style={{ display: 'inline-block', width: 2, height: '1.1em', backgroundColor: '#1A3C2A', marginLeft: 1, verticalAlign: 'text-bottom', animation: started ? 'cursor-blink 0.8s step-end infinite' : 'none' }}/>
+    </span>
+  );
+}
+
+// ─── Animated Stat Counter ──────────────────────────────────────────────────
+function StatCounter({ value }: { value: string }) {
+  const { ref, visible } = useReveal();
+  const [display, setDisplay] = useState('0');
+  const numMatch = value.match(/[\d.]+/);
+  const prefix = value.match(/^[^0-9]*/)?.[0] || '';
+  const suffix2 = value.replace(/^[^0-9]*[\d.]+/, '');
+
+  useEffect(() => {
+    if (!visible || !numMatch) return;
+    const target = parseFloat(numMatch[0]);
+    const isDecimal = numMatch[0].includes('.');
+    const decimals = isDecimal ? numMatch[0].split('.')[1].length : 0;
+    let current = 0;
+    const step = target / 30;
+    const interval = setInterval(() => {
+      current = Math.min(current + step, target);
+      const formatted = isDecimal ? current.toFixed(decimals) : Math.floor(current).toString();
+      setDisplay(prefix + formatted + suffix2);
+      if (current >= target) clearInterval(interval);
+    }, 30);
+    return () => clearInterval(interval);
+  }, [visible, numMatch, prefix, suffix2]);
+
+  return (
+    <span ref={ref as React.RefObject<HTMLSpanElement>} className={`stat-animate ${visible ? 'visible' : ''}`} style={{ display: 'inline-block' }}>
+      {numMatch ? display : value}
+    </span>
+  );
+}
+
+// ─── EDGAR Watch Illustration ────────────────────────────────────────────────
+function EdgarWatchIllustration() {
+  return (
+    <svg viewBox="0 0 480 260" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', maxWidth: 480 }}>
+      <rect x="4" y="4" width="472" height="252" rx="12" fill="#0B1D2E" stroke="#1A3C2A" strokeWidth="1.5"/>
+      <rect x="4" y="4" width="472" height="36" rx="12" fill="#112840"/>
+      <rect x="4" y="32" width="472" height="8" fill="#112840"/>
+      <circle cx="28" cy="22" r="5" fill="#EF4444" className="animate-pulse-dot"/>
+      <rect x="38" y="16" width="34" height="12" rx="3" fill="#EF4444"/>
+      <rect x="41" y="19" width="28" height="6" rx="2" fill="#7F1D1D"/>
+      <rect x="90" y="17" width="120" height="6" rx="3" fill="#1A3C5C" opacity="0.8"/>
+      <circle cx="400" cy="22" r="5" fill="#EF4444" opacity="0.7"/>
+      <circle cx="420" cy="22" r="5" fill="#F59E0B" opacity="0.7"/>
+      <circle cx="440" cy="22" r="5" fill="#22C55E" opacity="0.7"/>
+      <rect x="16" y="50" width="80" height="5" rx="2" fill="#1A3C5C" opacity="0.6"/>
+      <rect x="16" y="62" width="440" height="1" fill="#1A3C5C" opacity="0.3"/>
+      <rect x="16" y="70" width="80" height="5" rx="2" fill="#22C55E" opacity="0.7"/>
+      <rect x="104" y="70" width="120" height="5" rx="2" fill="#94A3B8" opacity="0.5"/>
+      <rect x="232" y="70" width="60" height="5" rx="2" fill="#94A3B8" opacity="0.4"/>
+      <rect x="300" y="68" width="50" height="10" rx="2" fill="#166534" stroke="#22C55E" strokeWidth="0.5"/>
+      <rect x="304" y="71" width="42" height="4" rx="1" fill="#4ADE80" opacity="0.7"/>
+      <circle cx="380" cy="73" r="4" fill="#22C55E" opacity="0.5"/>
+      <circle cx="400" cy="73" r="4" fill="#22C55E" opacity="0.5"/>
+      <circle cx="420" cy="73" r="4" fill="#22C55E" opacity="0.5"/>
+      <rect x="440" y="68" width="28" height="10" rx="2" fill="#112840" stroke="#1A3C5C" strokeWidth="0.5"/>
+      <rect x="443" y="71" width="22" height="4" rx="1" fill="#22C55E" opacity="0.4"/>
+      <rect x="16" y="90" width="70" height="5" rx="2" fill="#3B82F6" opacity="0.7"/>
+      <rect x="94" y="90" width="140" height="5" rx="2" fill="#94A3B8" opacity="0.5"/>
+      <rect x="242" y="90" width="50" height="5" rx="2" fill="#94A3B8" opacity="0.4"/>
+      <rect x="300" y="88" width="50" height="10" rx="2" fill="#1E3A5F" stroke="#3B82F6" strokeWidth="0.5"/>
+      <rect x="304" y="91" width="42" height="4" rx="1" fill="#60A5FA" opacity="0.7"/>
+      <circle cx="380" cy="93" r="4" fill="#3B82F6" opacity="0.5"/>
+      <circle cx="400" cy="93" r="4" fill="#3B82F6" opacity="0.5"/>
+      <circle cx="420" cy="93" r="4" fill="#3B82F6" opacity="0.5"/>
+      <rect x="440" y="88" width="28" height="10" rx="2" fill="#112840" stroke="#1A3C5C" strokeWidth="0.5"/>
+      <rect x="443" y="91" width="22" height="4" rx="1" fill="#60A5FA" opacity="0.4"/>
+      <rect x="14" y="107" width="452" height="20" rx="4" fill="#1A3C2A" opacity="0.3" stroke="#1A3C2A" strokeWidth="0.5"/>
+      <rect x="16" y="112" width="60" height="5" rx="2" fill="#F59E0B" opacity="0.9"/>
+      <rect x="84" y="112" width="160" height="5" rx="2" fill="#F8FAFC" opacity="0.7"/>
+      <rect x="252" y="112" width="70" height="5" rx="2" fill="#F59E0B" opacity="0.6"/>
+      <rect x="330" y="110" width="60" height="12" rx="3" fill="#92400E" stroke="#F59E0B" strokeWidth="0.75"/>
+      <rect x="336" y="114" width="48" height="4" rx="1" fill="#FDE68A" opacity="0.8"/>
+      <circle cx="420" cy="116" r="5" fill="#EF4444" opacity="0.8" className="animate-pulse-dot"/>
+      <rect x="440" y="110" width="28" height="10" rx="2" fill="#92400E" stroke="#F59E0B" strokeWidth="0.5"/>
+      <rect x="443" y="113" width="22" height="4" rx="1" fill="#F59E0B" opacity="0.5"/>
+      <rect x="16" y="136" width="75" height="5" rx="2" fill="#94A3B8" opacity="0.5"/>
+      <rect x="99" y="136" width="130" height="5" rx="2" fill="#94A3B8" opacity="0.4"/>
+      <rect x="237" y="136" width="55" height="5" rx="2" fill="#94A3B8" opacity="0.3"/>
+      <rect x="300" y="134" width="50" height="10" rx="2" fill="#1E3A5F" stroke="#1A3C5C" strokeWidth="0.5"/>
+      <rect x="304" y="137" width="42" height="4" rx="1" fill="#60A5FA" opacity="0.4"/>
+      <circle cx="380" cy="140" r="4" fill="#94A3B8" opacity="0.4"/>
+      <circle cx="400" cy="140" r="4" fill="#94A3B8" opacity="0.4"/>
+      <circle cx="420" cy="140" r="4" fill="#94A3B8" opacity="0.4"/>
+      <rect x="440" y="134" width="28" height="10" rx="2" fill="#112840" stroke="#1A3C5C" strokeWidth="0.5"/>
+      <rect x="443" y="137" width="22" height="4" rx="1" fill="#60A5FA" opacity="0.3"/>
+      <rect x="16" y="154" width="65" height="5" rx="2" fill="#A78BFA" opacity="0.6"/>
+      <rect x="89" y="154" width="145" height="5" rx="2" fill="#94A3B8" opacity="0.4"/>
+      <rect x="242" y="154" width="60" height="5" rx="2" fill="#94A3B8" opacity="0.3"/>
+      <rect x="310" y="152" width="50" height="10" rx="2" fill="#3B1D9E" stroke="#8B5CF6" strokeWidth="0.5"/>
+      <rect x="314" y="155" width="42" height="4" rx="1" fill="#A78BFA" opacity="0.5"/>
+      <circle cx="380" cy="157" r="4" fill="#8B5CF6" opacity="0.4"/>
+      <circle cx="400" cy="157" r="4" fill="#8B5CF6" opacity="0.4"/>
+      <circle cx="420" cy="157" r="4" fill="#8B5CF6" opacity="0.4"/>
+      <rect x="440" y="152" width="28" height="10" rx="2" fill="#112840" stroke="#1A3C5C" strokeWidth="0.5"/>
+      <rect x="443" y="155" width="22" height="4" rx="1" fill="#A78BFA" opacity="0.3"/>
+      <rect x="16" y="172" width="448" height="1" fill="#1A3C5C" opacity="0.3"/>
+      <rect x="16" y="182" width="90" height="5" rx="2" fill="#1A3C5C" opacity="0.5"/>
+      <rect x="16" y="194" width="60" height="8" rx="2" fill="#22C55E" opacity="0.8"/>
+      <rect x="84" y="196" width="20" height="4" rx="1" fill="#4ADE80" opacity="0.5"/>
+      <rect x="140" y="182" width="90" height="5" rx="2" fill="#1A3C5C" opacity="0.5"/>
+      <rect x="140" y="194" width="50" height="8" rx="2" fill="#3B82F6" opacity="0.8"/>
+      <rect x="196" y="196" width="20" height="4" rx="1" fill="#60A5FA" opacity="0.5"/>
+      <rect x="264" y="182" width="90" height="5" rx="2" fill="#1A3C5C" opacity="0.5"/>
+      <rect x="264" y="194" width="70" height="8" rx="2" fill="#F59E0B" opacity="0.8"/>
+      <rect x="340" y="196" width="20" height="4" rx="1" fill="#FDE68A" opacity="0.5"/>
+      <rect x="16" y="220" width="448" height="22" rx="4" fill="#0B1D2E" stroke="#1A3C5C" strokeWidth="0.75"/>
+      <rect x="20" y="224" width="180" height="14" rx="3" fill="#112840"/>
+      <rect x="22" y="226" width="140" height="10" rx="2" fill="#1A3C2A" opacity="0.8"/>
+      <rect x="22" y="226" width="80" height="10" rx="2" fill="#22C55E" opacity="0.6"/>
+      <rect x="210" y="226" width="40" height="8" rx="2" fill="#1A3C5C" opacity="0.5"/>
+      <rect x="256" y="226" width="40" height="8" rx="2" fill="#1A3C5C" opacity="0.5"/>
+      <rect x="302" y="226" width="40" height="8" rx="2" fill="#1A3C5C" opacity="0.5"/>
+      <rect x="348" y="226" width="40" height="8" rx="2" fill="#1A3C5C" opacity="0.5"/>
+      <rect x="394" y="226" width="40" height="8" rx="2" fill="#1A3C5C" opacity="0.5"/>
+      <rect x="440" y="226" width="20" height="8" rx="2" fill="#22C55E" opacity="0.5"/>
+      <circle cx="448" cy="230" r="3" fill="#EF4444" opacity="0.9" className="animate-pulse-dot"/>
+    </svg>
+  );
+}
+
+// ─── Simulated Filing Feed (animated "video") ────────────────────────────────
+function FilingFeedAnimation() {
+  return (
+    <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 8, backgroundColor: '#0B1D2E', height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {/* Dark background with scan lines */}
+      <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(26,60,42,0.03) 2px, rgba(26,60,42,0.03) 4px)', pointerEvents: 'none' }}/>
+      {/* Animated scan bar */}
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, transparent, #22C55E, transparent)', animation: 'scan-highlight 3s ease-in-out infinite', opacity: 0.6 }}/>
+      {/* Filing docs flowing through */}
+      <div style={{ position: 'absolute', top: '-20px', left: '20%', animation: 'doc-feed 4s ease-out infinite' }}>
+        <svg width="60" height="76" viewBox="0 0 60 76" fill="none"><rect x="2" y="2" width="38" height="50" rx="4" fill="white" stroke="#1A3C2A" strokeWidth="1.5"/><rect x="8" y="12" width="20" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="8" y="20" width="28" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="8" y="28" width="18" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="2" y="54" width="38" height="20" rx="0" fill="#22C55E" opacity="0.2"/></svg>
+      </div>
+      <div style={{ position: 'absolute', top: '-20px', left: '55%', animation: 'doc-feed 4s ease-out infinite 1.2s' }}>
+        <svg width="60" height="76" viewBox="0 0 60 76" fill="none"><rect x="2" y="2" width="38" height="50" rx="4" fill="white" stroke="#1A3C2A" strokeWidth="1.5"/><rect x="8" y="12" width="20" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="8" y="20" width="28" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="8" y="28" width="18" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="2" y="54" width="38" height="20" rx="0" fill="#3B82F6" opacity="0.2"/></svg>
+      </div>
+      <div style={{ position: 'absolute', top: '-20px', left: '80%', animation: 'doc-feed 4s ease-out infinite 2.4s' }}>
+        <svg width="60" height="76" viewBox="0 0 60 76" fill="none"><rect x="2" y="2" width="38" height="50" rx="4" fill="white" stroke="#1A3C2A" strokeWidth="1.5"/><rect x="8" y="12" width="20" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="8" y="20" width="28" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="8" y="28" width="18" height="3" rx="1" fill="#1A3C2A" opacity="0.4"/><rect x="2" y="54" width="38" height="20" rx="0" fill="#F59E0B" opacity="0.2"/></svg>
+      </div>
+      {/* Center label */}
+      <div style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
+        <p style={{ fontSize: 13, fontFamily: 'monospace', color: '#22C55E', marginBottom: 4 }}>INGESTING</p>
+        <div style={{ display: 'flex', gap: 6, justifyContent: 'center' }}>
+          <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#22C55E', animation: 'pulse-dot 1s ease-in-out infinite' }}/>
+          <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#22C55E', animation: 'pulse-dot 1s ease-in-out infinite 0.2s' }}/>
+          <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#22C55E', animation: 'pulse-dot 1s ease-in-out infinite 0.4s' }}/>
+        </div>
+        <p style={{ fontSize: 11, color: '#94A3B8', marginTop: 8, fontFamily: 'monospace' }}>10-K / 10-Q / 8-K / Earnings Call</p>
+      </div>
+    </div>
+  );
+}
+
+// ─── Trust Bar Ticker Tape ──────────────────────────────────────────────────
+const TICKER_ITEMS = [
+  'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'NVDA', 'TSLA', 'JPM', 'GS', 'BAC',
+  'MS', 'C', 'BRK.B', 'V', 'MA', 'BLK', 'SCHW', 'AXP', 'USB', 'PNC',
+  'TFC', 'COF', 'ALL', 'TRV', 'MET', 'PRU', 'AIG', 'L', 'CINF', 'RJF',
+  'AMD', 'INTC', 'QCOM', 'TXN', 'AVGO', 'ORCL', 'SAP', 'CRM', 'NOW', 'SNOW',
+  'NFLX', 'DIS', 'CMCSA', 'T', 'VZ', 'TMUS', 'DISH', 'CHTR', 'WBD', 'PARA',
+  'KO', 'PEP', 'PG', 'MCD', 'SBUX', 'NKE', 'HD', 'LOW', 'COST', 'WMT',
+];
+
+function TrustBar() {
+  return (
+    <section style={{ paddingTop: 48, paddingBottom: 48, paddingLeft: 0, paddingRight: 0, borderTop: "1px solid #E5E7EB", backgroundColor: "#FFFFFF", overflow: 'hidden' }}>
+      <div style={{ maxWidth: 960, margin: "0 auto", textAlign: "center", marginBottom: 16 }}>
+        <p style={{ fontSize: 13, color: "#94A3B8", marginBottom: 0 }}>
+          Used by analysts at long/short equity funds, family offices, and research boutiques
+        </p>
+      </div>
+      <div style={{ position: 'relative' }}>
+        <div className="ticker-wrap" style={{ overflow: 'hidden' }}>
+          <div style={{ display: 'flex', animation: 'ticker 40s linear infinite', width: 'max-content' }}>
+            {[...TICKER_ITEMS, ...TICKER_ITEMS].map((ticker, i) => (
+              <span key={i} style={{ padding: '0 20px', fontSize: 13, fontFamily: 'monospace', fontWeight: 600, color: '#94A3B8', whiteSpace: 'nowrap' }}>
+                {ticker}
+                <span style={{ marginLeft: 20, color: '#CBD5E1' }}>•</span>
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
